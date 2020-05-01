@@ -39,14 +39,14 @@ def lambda_handler(event=None, context=None):
 
     # 実行日時の0:00:00~23:59:59を取得
     now = datetime.datetime.now()
-    start_day = datetime.datetime(now.year, 3, now.day, 0, 0, 0)
+    start_day = datetime.datetime(now.year, now.month, now.day, 0, 0, 0)
     end_day = datetime.datetime(now.year, now.month, now.day, 23, 59, 59)
 
     # エクスポートタスクを作成
     response = client.create_export_task(
         taskName=EXPORT_TASK_NAME,
         logGroupName=log_group['logGroupName'],
-        fromTime=int(start_day.timestamp() * 1000),
+        fromTime=0,
         to=int(end_day.timestamp() * 1000),
         destination=S3_BUCKET, destinationPrefix=S3_DIR
     )
