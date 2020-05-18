@@ -1,11 +1,12 @@
 import boto3
 import datetime
-from _datetime import date, timedelta
+from _datetime import timedelta
+import os
 
 # ロググループを検索する際のクエリ―
-PREFIX = '/aws/lambda/hmkvDementiaFunction'
+PREFIX = os.environ.get('TARGET_LOGGROUP')
 # ログを保管するs3バケット
-S3_BUCKET = 'hmkv-test-log-store'
+S3_BUCKET = os.environ.get('S3_BUCKET')
 # ログを保管するs3のディレクトリ
 S3_DIR = 'logs'
 # エクスポートタスク名
