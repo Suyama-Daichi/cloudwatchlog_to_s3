@@ -4,20 +4,20 @@ from _datetime import timedelta
 import os
 import time
 
-# ロググループを検索する際のクエリ―
+# 対象となるロググループは環境変数で指定(複数の場合はカンマ区切りの文字列)
 TARGET_LOGGROUPS = str(os.environ.get('TARGET_LOGGROUPS')).split(',')
-# ログを保管するs3バケット
+# ログを保管するs3バケットは環境変数で指定
 S3_BUCKET = os.environ.get('S3_BUCKET')
 # ログを保管するs3のディレクトリ
 S3_DIR = 'logs'
 # エクスポートタスク名
 EXPORT_TASK_NAME = "test_task"
 
+client = boto3.client('logs')
+
 
 def lambda_handler(event=None, context=None):
     responses = []
-
-    client = boto3.client('logs')
 
     for taget_loggroup in TARGET_LOGGROUPS:
         # タスクが終了するまで待つ
